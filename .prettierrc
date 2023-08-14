@@ -1,6 +1,11 @@
 {
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^components/(@*)$", "^[@/]"],
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^@mantine/(.*)$",
+    "^@tabler/(.*)$",
+    "^[@/*]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
