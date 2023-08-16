@@ -68,7 +68,7 @@ function Login() {
           <Button
             variant="light"
             compact
-            onClick={() => router.push("/admin/signup")}
+            onClick={() => router.push("/user/signup")}
           >
             Register
           </Button>

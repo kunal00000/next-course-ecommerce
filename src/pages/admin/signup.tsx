@@ -64,7 +64,11 @@ function Register() {
       <Group>
         <Text size={"sm"} className="ml-auto">
           Already a user?
-          <Button variant="light" compact onClick={() => router.push("/login")}>
+          <Button
+            variant="light"
+            compact
+            onClick={() => router.push("/admin/login")}
+          >
             Login
           </Button>
         </Text>

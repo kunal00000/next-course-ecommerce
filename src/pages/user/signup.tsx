@@ -5,10 +5,10 @@ import { Button, Card, Group, Input, PasswordInput, Text } from "@mantine/core";
 
 import { IconAt, IconLock } from "@tabler/icons-react";
 
-import { postLogin } from "@/helpers/auth";
+import { postSignup } from "@/helpers/auth";
 import { ErrorNotification } from "@/utils/notification";
 
-function Login() {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -20,14 +20,13 @@ function Login() {
     setPassword(e.target.value);
   }
 
-  async function onLogin() {
+  async function onSignup() {
     try {
-      const loginResponse = await postLogin(email, password);
-      if (loginResponse.message === "Logged in successfully") {
+      const signupResponse = await postSignup(email, password);
+      if (signupResponse.success === true) {
         router.push("/dashboard");
       }
     } catch (err: any) {
-      console.log(err);
       ErrorNotification(err.response.data.message);
     }
   }
@@ -41,7 +40,7 @@ function Login() {
     >
       <Card.Section withBorder inheritPadding py={4} my={20}>
         <Text size={20} fw={700} color="teal">
-          Login to admin dashboard
+          Register to the website
         </Text>
       </Card.Section>
       <Input.Wrapper withAsterisk label="Username" onChange={handleEmail}>
@@ -58,19 +57,19 @@ function Login() {
         className=""
       />
       <Group position="center" className="my-4 mt-7">
-        <Button onClick={onLogin} variant="outline" color="teal">
-          Login
+        <Button onClick={onSignup} variant="outline" color="teal">
+          Sign up
         </Button>
       </Group>
       <Group>
         <Text size={"sm"} className="ml-auto">
-          New here?{" "}
+          Already a user?
           <Button
             variant="light"
             compact
-            onClick={() => router.push("/admin/signup")}
+            onClick={() => router.push("/user/login")}
           >
-            Register
+            Login
           </Button>
         </Text>
       </Group>
@@ -78,4 +77,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
