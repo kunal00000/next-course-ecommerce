@@ -5,7 +5,7 @@ import { Button, Card, Group, Input, PasswordInput, Text } from "@mantine/core";
 
 import { IconAt, IconLock } from "@tabler/icons-react";
 
-import { postSignup } from "@/services/auth";
+import { postSignup } from "@/helpers/auth";
 import { ErrorNotification } from "@/utils/notification";
 
 function Register() {
