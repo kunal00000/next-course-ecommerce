@@ -11,3 +11,10 @@ export const admin_zod_schema = z
   .strict();
 
 export type Admin = z.infer<typeof admin_zod_schema>;
+
+export const admin_input_zod_schema = z
+  .object({
+    username: z.string().min(1).max(20),
+    password: z.string().min(1).max(40)
+  })
+  .strict();

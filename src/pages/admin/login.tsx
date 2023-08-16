@@ -6,6 +6,7 @@ import { Button, Card, Group, Input, PasswordInput, Text } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
 
 import { postLogin } from "@/helpers/auth";
+import { admin_input_zod_schema } from "@/types/admin.types";
 import { ErrorNotification } from "@/utils/notification";
 
 function Login() {
@@ -22,9 +23,18 @@ function Login() {
 
   async function onLogin() {
     try {
-      const loginResponse = await postLogin(email, password);
-      if (loginResponse.message === "Logged in successfully") {
-        router.push("/dashboard");
+      const valid = admin_input_zod_schema.safeParse({
+        username: email,
+        password: password
+      });
+
+      if (valid.success) {
+        const loginResponse = await postLogin(email, password);
+        if (loginResponse.success === true) {
+          router.push("/admin/dashboard");
+        }
+      } else {
+        ErrorNotification(valid.error.message);
       }
     } catch (err: any) {
       console.log(err);
@@ -41,7 +51,9 @@ function Login() {
     >
       <Card.Section withBorder inheritPadding py={4} my={20}>
         <Text size={20} fw={700} color="teal">
-          Login to admin dashboard
+          Login to
+          <strong className="text-black"> admin </strong>
+          dashboard
         </Text>
       </Card.Section>
       <Input.Wrapper withAsterisk label="Username" onChange={handleEmail}>

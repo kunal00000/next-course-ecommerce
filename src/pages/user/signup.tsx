@@ -6,6 +6,7 @@ import { Button, Card, Group, Input, PasswordInput, Text } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
 
 import { postSignup } from "@/helpers/auth";
+import { admin_input_zod_schema } from "@/types/admin.types";
 import { ErrorNotification } from "@/utils/notification";
 
 function Register() {
@@ -22,9 +23,18 @@ function Register() {
 
   async function onSignup() {
     try {
-      const signupResponse = await postSignup(email, password);
-      if (signupResponse.success === true) {
-        router.push("/dashboard");
+      const valid = admin_input_zod_schema.safeParse({
+        username: email,
+        password: password
+      });
+
+      if (valid.success) {
+        const signupResponse = await postSignup(email, password);
+        if (signupResponse.success === true) {
+          router.push("/user/dashboard");
+        }
+      } else {
+        ErrorNotification(valid.error.message);
       }
     } catch (err: any) {
       ErrorNotification(err.response.data.message);
@@ -40,7 +50,8 @@ function Register() {
     >
       <Card.Section withBorder inheritPadding py={4} my={20}>
         <Text size={20} fw={700} color="teal">
-          Register to the website
+          Register as
+          <strong className="text-black"> user</strong>
         </Text>
       </Card.Section>
       <Input.Wrapper withAsterisk label="Username" onChange={handleEmail}>
