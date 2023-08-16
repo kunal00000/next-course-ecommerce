@@ -17,14 +17,14 @@ export default function Home() {
           <Button
             variant="subtle"
             color="cyan"
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/admin/login")}
           >
             Login
           </Button>
           <Button
             variant="outline"
             color="cyan"
-            onClick={() => router.push("/register")}
+            onClick={() => router.push("/admin/signup")}
           >
             Start for free
           </Button>
@@ -61,12 +61,15 @@ export default function Home() {
               <Button
                 variant="outline"
                 color="teal"
-                onClick={() => router.push("/register")}
+                onClick={() => router.push("/admin/signup")}
               >
                 Start for free
               </Button>
-              <Button variant="light" onClick={() => router.push("/register")}>
-                Book a demo
+              <Button
+                variant="light"
+                onClick={() => router.push("/admin/signup")}
+              >
+                Launch your course
               </Button>
             </Group>
           </div>
