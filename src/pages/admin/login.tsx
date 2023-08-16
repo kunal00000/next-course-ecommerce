@@ -6,7 +6,7 @@ import { Button, Card, Group, Input, PasswordInput, Text } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
 
 import { postLogin } from "@/helpers/auth";
-import { admin_input_zod_schema } from "@/types/admin.types";
+import { user_input_zod_schema } from "@/types/common.types";
 import { ErrorNotification } from "@/utils/notification";
 
 function Login() {
@@ -23,7 +23,7 @@ function Login() {
 
   async function onLogin() {
     try {
-      const valid = admin_input_zod_schema.safeParse({
+      const valid = user_input_zod_schema.safeParse({
         username: email,
         password: password
       });
