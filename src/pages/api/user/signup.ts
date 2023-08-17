@@ -37,7 +37,10 @@ export default async function handler(
             { expiresIn: "1h" }
           );
 
-          res.setHeader("Set-Cookie", `token=${token}; Secure; HttpOnly`);
+          res.setHeader(
+            "Set-Cookie",
+            `token=${token}; Secure; HttpOnly; Path=/`
+          );
 
           return res.status(200).json({
             success: true,
