@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { Button, Center, Group, Image, Text } from "@mantine/core";
@@ -7,7 +8,7 @@ export default function Home() {
 
   return (
     <div className="w-full h-full">
-      <nav className="flex flex-row justify-between items-center my-[1vw] mx-[5vw] h-16 z-10">
+      <nav className="flex flex-row justify-between items-center my-[1vw] px-[5vw] h-16 z-10">
         <div className="flex flex-row xs:text-lg md:text-3xl ">
           <strong>Course</strong>
           <span className="font-light">Hub</span>
@@ -17,22 +18,68 @@ export default function Home() {
           <Button
             variant="subtle"
             color="cyan"
-            onClick={() => router.push("/admin/login")}
+            onClick={() => router.push("/user/signup")}
           >
-            Login
+            User
           </Button>
           <Button
             variant="outline"
             color="cyan"
             onClick={() => router.push("/admin/signup")}
           >
-            Start for free
+            Creator
           </Button>
         </Group>
       </nav>
 
-      <Center m={"5vw"}>
-        <div className="flex xs:flex-wrap flex-1 md:flex-row-reverse justify-around items-center xs:w-[90vw] md:w-full">
+      <Center p={"5vw"}>
+        <div className="flex xs:flex-wrap-reverse flex-1 justify-around items-center xs:w-[90vw] md:w-full">
+          <div>
+            <Text fw={700} className="xs:text-2xl md:text-5xl text-bold">
+              Learn something
+              <br />
+              new everyday.
+            </Text>
+            <Text className="my-[2vw]">
+              Let's learn new course and Gain more skills
+              <br />
+              all using just CourseHub.
+            </Text>
+            <Group spacing="sm" my={"2vw"}>
+              <Button
+                variant="outline"
+                color="teal"
+                onClick={() => router.push("/user/signup")}
+              >
+                Start as user
+              </Button>
+              <Button
+                variant="light"
+                onClick={() => router.push("/user/login")}
+              >
+                Explore Courses
+              </Button>
+            </Group>
+          </div>
+
+          <div className="relative my-6">
+            <Image
+              fit="cover"
+              src={
+                "https://otus.com/wp-content/uploads/2022/06/Homepage-Header.png"
+              }
+              alt="CourseHub"
+              className="md:max-w-[35vw]"
+              caption="Over 100K+ students have leveled up their learnings and skills using CourseHub."
+            />
+          </div>
+        </div>
+      </Center>
+
+      <div className="w-[70%] mx-auto my-2 rounded-full border-2 border-amber-400 shadow-yellow-300" />
+
+      <Center p={"5vw"}>
+        <div className="flex xs:flex-wrap flex-1 justify-around items-center xs:w-[90vw] md:w-full">
           <div className="relative my-6">
             <Image
               fit="cover"
@@ -41,11 +88,9 @@ export default function Home() {
               }
               className="md:max-w-[35vw]"
               alt="CourseHub"
+              caption="Over 100K+ creators have launched their online teaching businesses
+              using CourseHub."
             />
-            <Text size={"xs"}>
-              Over 100K+ creators have launched their online teaching businesses
-              using CourseHub.
-            </Text>
           </div>
           <div>
             <Text fw={700} className="xs:text-2xl md:text-5xl text-bold">
@@ -63,18 +108,28 @@ export default function Home() {
                 color="teal"
                 onClick={() => router.push("/admin/signup")}
               >
-                Start for free
+                Start as creator
               </Button>
               <Button
                 variant="light"
-                onClick={() => router.push("/admin/signup")}
+                onClick={() => router.push("/admin/login")}
               >
-                Launch your course
+                Launch a course
               </Button>
             </Group>
           </div>
         </div>
       </Center>
+
+      <footer className="w-full flex flex-row justify-center items-center border-y-[0.1rem] border-gray-200 my-[1vw] px-[5vw] h-16 xs:text-xs">
+        <Link
+          href="https://github.com/kunal00000"
+          target="_blank"
+          className="underline"
+        >
+          Made by Kunal Verma. All rights reserved
+        </Link>
+      </footer>
     </div>
   );
 }
