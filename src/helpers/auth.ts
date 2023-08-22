@@ -1,4 +1,7 @@
+import { useSetRecoilState } from "recoil";
+
 import axiosClient from "@/helpers/axiosClient";
+import { userState } from "@/store/atoms/user";
 import { ErrorNotification, SuccessNotification } from "@/utils/notification";
 
 export const postSignup = async (email: string, password: string) => {
@@ -37,8 +40,10 @@ export const postLogin = async (email: string, password: string) => {
 };
 
 export const getUsername = async () => {
-  const response = await axiosClient.get("admin/username");
-  if (response.status === 200) {
-    return response.data.username as string;
+  const { data } = await axiosClient.get("api/me");
+  if (data.success == true) {
+    return data.username;
+  } else {
+    return data.message;
   }
 };
