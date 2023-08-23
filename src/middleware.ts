@@ -22,6 +22,7 @@ export default async function middleware(request: NextRequest) {
 
       const requestHeaders = new Headers(request.headers);
       requestHeaders.set("username", userObject.username);
+      requestHeaders.set("role", userObject.role);
 
       const response = NextResponse.next({
         request: {

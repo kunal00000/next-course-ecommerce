@@ -1,17 +1,19 @@
-import {atom} from "recoil";
+import { atom } from "recoil";
 
-export interface Course {
-    _id: string;
-    title: string;
-    description: string;
-    imageLink: string;
-    price: string;
-}
+import { Course } from "@/types/course.types";
 
-export const courseState = atom<{isLoading: boolean, course: null | Course}>({
-  key: 'courseState',
+export const courseState = atom<{ isLoading: boolean; course: null | Course }>({
+  key: "courseState",
   default: {
     isLoading: true,
     course: null
-  },
+  }
+});
+
+export const coursesState = atom<{ isLoading: boolean; courses: Course[] }>({
+  key: "coursesState",
+  default: {
+    isLoading: true,
+    courses: []
+  }
 });

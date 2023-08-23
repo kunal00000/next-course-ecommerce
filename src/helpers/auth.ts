@@ -39,7 +39,7 @@ export const postLogin = async (email: string, password: string) => {
 export const getUsername = async () => {
   const { data } = await axiosClient.get("api/me");
   if (data.success == true) {
-    return data.username;
+    return data;
   } else {
     return data.message;
   }

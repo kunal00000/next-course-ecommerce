@@ -9,3 +9,12 @@ export const usernameState = selector({
     return state.username;
   }
 });
+
+export const userroleState = selector({
+  key: "userroleState",
+  get: ({ get }) => {
+    const state = get(userState);
+
+    return state.role;
+  }
+});

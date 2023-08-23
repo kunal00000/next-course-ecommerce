@@ -1,9 +1,12 @@
 import Link from "next/link";
 import React from "react";
+import { useRecoilValue } from "recoil";
 
 import { Group, Text, ThemeIcon, UnstyledButton } from "@mantine/core";
 
 import { IconBrandGoogleAnalytics, IconCertificate } from "@tabler/icons-react";
+
+import { userroleState } from "@/store/selectors/userEmail";
 
 interface RedirectProps {
   icon: React.ReactNode;
@@ -43,16 +46,18 @@ export const Redirect = ({ icon, color, label }: RedirectProps) => {
 };
 
 export function MainLinks() {
+  const role = useRecoilValue(userroleState);
+
   return (
     <div>
-      <Link href={""}>
+      <Link href={`/${role}/dashboard`}>
         <Redirect
           icon={<IconBrandGoogleAnalytics />}
           color={"orange"}
           label={"Overview"}
         />
       </Link>
-      <Link href={"dashboard/courses"}>
+      <Link href={`/${role}/dashboard/courses`}>
         <Redirect
           icon={<IconCertificate />}
           color={"yellow"}

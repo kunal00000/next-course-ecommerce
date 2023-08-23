@@ -1,36 +1,18 @@
 import Link from "next/link";
-import { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 
-import { AppShell, Navbar, Text } from "@mantine/core";
+import { AppShell, Navbar, SimpleGrid, Text } from "@mantine/core";
 
 import { IconSquareRoundedPlus } from "@tabler/icons-react";
 
-import Overview from "@/components/overview/Overview";
+import CourseCard from "@/components/course/CourseCard";
 import { MainLinks, Redirect } from "@/components/utilComponents/Redirect";
 import { User } from "@/components/utilComponents/User";
-import { getUsername } from "@/helpers/auth";
-import { userState } from "@/store/atoms/user";
+import { coursesState } from "@/store/atoms/course";
 import { userroleState } from "@/store/selectors/userEmail";
 
-function Dashboard() {
-  const setUsername = useSetRecoilState(userState);
+export default function CourseDashboard() {
   const role = useRecoilValue(userroleState);
-
-  useEffect(() => {
-    getUsername()
-      .then((data) => {
-        setUsername({
-          isLoading: false,
-          username: data.username,
-          role: data.role
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
     <div>
       <AppShell
@@ -51,7 +33,7 @@ function Dashboard() {
               <MainLinks />
             </Navbar.Section>
             <Navbar.Section>
-              <Link href={`/admin/dashboard/create`}>
+              <Link href={`/${role}/dashboard/create`}>
                 <Redirect
                   icon={<IconSquareRoundedPlus />}
                   color={"lime"}
@@ -73,10 +55,29 @@ function Dashboard() {
           }
         })}
       >
-        <Overview />
+        <CoursePage />
       </AppShell>
     </div>
   );
 }
 
-export default Dashboard;
+const CoursePage = () => {
+  const courses = useRecoilValue(coursesState);
+
+  if (courses.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <>
+      <Text size={"xl"} m={"xl"} weight={"bolder"}>
+        Courses
+      </Text>
+      <SimpleGrid m={"xl"} cols={3}>
+        {courses.courses.map((course) => (
+          <CourseCard key={course._id} course={course} />
+        ))}
+      </SimpleGrid>
+    </>
+  );
+};

@@ -8,7 +8,11 @@ export default async function handler(
     if (req.headers["username"] !== undefined) {
       return res
         .status(200)
-        .json({ success: true, username: req.headers["username"] });
+        .json({
+          success: true,
+          username: req.headers["username"],
+          role: req.headers["role"]
+        });
     } else {
       return res
         .status(404)
