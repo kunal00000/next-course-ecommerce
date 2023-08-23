@@ -17,7 +17,7 @@ export default async function handler(
     }).populate("myCourses");
 
     if (admin) {
-      return res.json({ success: true, user: admin });
+      return res.json({ success: true, courses: admin.myCourses });
     } else {
       return res
         .status(403)
