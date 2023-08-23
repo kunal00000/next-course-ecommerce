@@ -34,10 +34,20 @@ export default async function middleware(request: NextRequest) {
       console.log(error);
     }
   } else {
-    // return NextResponse.redirect(new URL("/", request.nextUrl));
+    if (request.nextUrl.pathname == "/admin/dashboard") {
+      return NextResponse.redirect(new URL("/admin/login", request.nextUrl));
+    } else if (request.nextUrl.pathname == "/user/dashboard") {
+      return NextResponse.redirect(new URL("/user/login", request.nextUrl));
+    }
   }
 }
 
 export const config = {
-  matcher: ["/", "/api/me", "/profile"]
+  matcher: [
+    "/admin/dashboard",
+    "/user/dashboard",
+    "/api/me",
+    "/api/admin/courses",
+    "/api/admin/courses/[courseId]"
+  ]
 };

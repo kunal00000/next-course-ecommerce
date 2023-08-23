@@ -6,7 +6,8 @@ const course_db_schema = new mongoose.Schema({
   price: Number,
   imageLink: String,
   published: Boolean,
-  updatedAt: Date,
+  updatedAt: Date
 });
 
-export const CourseModel = mongoose.model("course", course_db_schema);
+export const CourseModel =
+  mongoose.models.Course || mongoose.model("Course", course_db_schema);

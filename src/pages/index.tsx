@@ -18,14 +18,14 @@ export default function Home() {
           <Button
             variant="subtle"
             color="cyan"
-            onClick={() => router.push("/user/signup")}
+            onClick={() => router.push("/user/dashboard")}
           >
             User
           </Button>
           <Button
             variant="outline"
             color="cyan"
-            onClick={() => router.push("/admin/signup")}
+            onClick={() => router.push("/admin/dashboard")}
           >
             Creator
           </Button>
