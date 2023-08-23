@@ -1,7 +1,4 @@
-import { useSetRecoilState } from "recoil";
-
 import axiosClient from "@/helpers/axiosClient";
-import { userState } from "@/store/atoms/user";
 import { ErrorNotification, SuccessNotification } from "@/utils/notification";
 
 export const postSignup = async (email: string, password: string) => {
