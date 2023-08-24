@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 import {
   Button,
@@ -13,10 +14,12 @@ import {
   Textarea
 } from "@mantine/core";
 
-import { createCourse } from "@/helpers/course";
+import { updateCourse } from "@/helpers/course";
+import { coursesState } from "@/store/atoms/course";
+import { Course, CourseForm } from "@/types/course.types";
 import { ErrorNotification } from "@/utils/notification";
 
-function CreateCourse() {
+function EditCourse() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [imageLink, setLink] = useState("");
@@ -24,26 +27,46 @@ function CreateCourse() {
   const [published, setPublished] = useState<string | null>("true");
 
   const router = useRouter();
+  const courses = useRecoilValue(coursesState);
 
-  async function onCreateCourse() {
-    const data = {
+  useEffect(() => {
+    if (!courses.isLoading && courses.courses.length > 0) {
+      const currCourse = courses["courses"].find(
+        (course: Course) => course._id === router.query.courseId
+      );
+
+      if (!currCourse) {
+        ErrorNotification("Course not found!");
+        router.push("/admin/dashboard/courses");
+      } else {
+        setTitle(currCourse.title);
+        setDesc(currCourse.description);
+        setLink(currCourse.imageLink);
+        setPrice(currCourse.price);
+        setPublished(currCourse.published ? "true" : "false");
+      }
+    }
+  }, [courses, router.query.courseId]);
+
+  async function onEditCourse() {
+    const edittedCourse = {
       title: title,
       description: desc,
       imageLink: imageLink,
-      price: price || 0,
+      price: price,
       published: published === "true" ? true : false
-    };
-    console.log(data);
+    } as CourseForm;
+    console.log(edittedCourse);
     try {
-      const x = await createCourse(data);
-      if (x.success) {
-        alert("Course Created Successfully!");
-        router.push(`/admin/dashboard/courses`);
-      }
-    } catch (error: any) {
-      ErrorNotification(error.response.data.message);
-      console.log(error.response.data.errors);
+      await updateCourse(router.query.courseId as string, edittedCourse);
+      router.push("/admin/dashboard/courses");
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  if (courses.isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -51,12 +74,13 @@ function CreateCourse() {
       <Card p={"xl"} w={"50vw"} m={"auto"} shadow="lg">
         <Group position="center">
           <Text size={"xl"} color="teal" weight={"bold"}>
-            Create Course Page
+            Edit Course Page
           </Text>
         </Group>
         <TextInput
           label="Title"
           placeholder="Learn to be a pro..."
+          value={title}
           withAsterisk
           p={"xs"}
           onChange={(e) => {
@@ -66,6 +90,7 @@ function CreateCourse() {
         <Textarea
           label="Description"
           placeholder="Get to know these 5 techniques..."
+          value={desc}
           withAsterisk
           autosize
           minRows={2}
@@ -78,6 +103,7 @@ function CreateCourse() {
         <TextInput
           label="Image Link"
           placeholder="image link here..."
+          value={imageLink}
           withAsterisk
           p={"xs"}
           onChange={(e) => {
@@ -88,8 +114,8 @@ function CreateCourse() {
           <NumberInput
             label="Price (in $)"
             placeholder="best price you can offer..."
-            withAsterisk
             value={price}
+            withAsterisk
             min={0}
             w={"50%"}
             p={"xs"}
@@ -101,7 +127,7 @@ function CreateCourse() {
               { value: "true", label: "Publish Now" },
               { value: "false", label: "Publish Later" }
             ]}
-            defaultValue={published}
+            value={published}
             p={"xs"}
             onChange={setPublished}
           />
@@ -110,12 +136,12 @@ function CreateCourse() {
           <Link href={"/admin/dashboard/courses"} replace={true}>
             <Button variant="default">Cancel</Button>
           </Link>
-          <Button variant="outline" onClick={onCreateCourse}>
-            Create Course
+          <Button variant="outline" onClick={onEditCourse}>
+            Edit Course
           </Button>
         </Group>
       </Card>
     </div>
   );
 }
-export default CreateCourse;
+export default EditCourse;

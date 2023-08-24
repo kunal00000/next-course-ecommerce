@@ -33,7 +33,7 @@ export default function CourseDashboard() {
               <MainLinks />
             </Navbar.Section>
             <Navbar.Section>
-              <Link href={`/${role}/dashboard/create`}>
+              <Link href={`/admin/dashboard/create`}>
                 <Redirect
                   icon={<IconSquareRoundedPlus />}
                   color={"lime"}

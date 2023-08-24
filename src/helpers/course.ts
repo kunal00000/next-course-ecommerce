@@ -10,9 +10,7 @@ export async function getCourses() {
 
 export async function createCourse(course: CourseForm) {
   const { data } = await axiosClient.post("/api/admin/courses", course);
-  if (data.success === true) {
-    return data;
-  }
+  return data;
 }
 
 export async function updateCourse(id: string, course: CourseForm) {

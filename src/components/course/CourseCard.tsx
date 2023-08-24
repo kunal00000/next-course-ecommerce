@@ -35,7 +35,7 @@ export default function CourseCard({ course }: { course: Course }) {
       <Text size={"xs"} color="dimmed" mt={"md"}>
         {course.updatedAt}
       </Text>
-      <Link href={`/dashboard/edit/${course._id}`}>
+      <Link href={`/admin/dashboard/edit/${course._id}`}>
         <Button
           rightIcon={<IconExternalLink />}
           variant="default"
